@@ -1,10 +1,12 @@
 package com.sarality.list;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ListView;
 
+import com.sarality.datasource.ContentProviderSource;
 import com.sarality.datasource.DataSource;
 
 import java.util.List;
@@ -21,6 +23,8 @@ public class ListViewInitializer<T, H> {
   private final ListViewItemRenderer<T, H> renderer;
 
   // Optional fields
+  private ListViewCursorAdapter<T, H> cursorAdapter;
+
   private View emptyListView = null;
 
   public ListViewInitializer(Activity activity, int listViewId, ListViewItemRenderer<T, H> renderer) {
@@ -48,8 +52,25 @@ public class ListViewInitializer<T, H> {
     activity.getSupportLoaderManager().initLoader(loaderId, null, dataInitializer).forceLoad();
   }
 
+  public void initAsync(FragmentActivity activity, int loaderId, ContentProviderSource<T> contentProviderSource) {
+    cursorAdapter = new ListViewCursorAdapter<>(activity, null, renderer, contentProviderSource);
+    listView.setAdapter(cursorAdapter);
+
+    if (emptyListView != null) {
+      listView.setEmptyView(emptyListView);
+    }
+
+    ListViewCursorInitializer<T> dataInitializer = new ListViewCursorInitializer<>(activity, contentProviderSource, this);
+    activity.getSupportLoaderManager().initLoader(loaderId, null, dataInitializer).forceLoad();
+  }
+
+  void setCursor(Cursor cursor) {
+    cursorAdapter.swapCursor(cursor);
+  }
+
   void render(List<T> dataList) {
-    listView.setAdapter(new ListViewAdapter<>(activity, dataList, renderer));
+    ListViewAdapter<T, H> listViewAdapter = new ListViewAdapter<>(activity, dataList, renderer);
+    listView.setAdapter(listViewAdapter);
 
     if (emptyListView != null) {
       listView.setEmptyView(emptyListView);
