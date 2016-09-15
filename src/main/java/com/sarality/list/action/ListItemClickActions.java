@@ -1,0 +1,89 @@
+package com.sarality.list.action;
+
+import android.app.Activity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import com.sarality.action.ActionInitializer;
+import com.sarality.action.ViewAction;
+
+/**
+ * Registers Click Actions on a View or children of a View.
+ *
+ * @author abhideep@ (Abhideep Singh)
+ */
+public class ListItemClickActions implements ActionInitializer {
+
+  private Activity activity;
+  private int listViewId;
+  private ListViewAction listViewAction;
+  // TODO(abhideep): Add support for clicks on sub item
+
+  public ListItemClickActions(Activity activity, int listViewId) {
+    this.activity = activity;
+    this.listViewId = listViewId;
+  }
+
+  public ListItemClickActions register(ListViewAction listViewAction) {
+    if (this.listViewAction != null) {
+      throw new IllegalStateException("Cannot register multiple default actions for the same List with Id  " +
+          activity.getResources().getResourceName(listViewId));
+    }
+    this.listViewAction = listViewAction;
+    return this;
+  }
+
+  public ListItemClickActions register(ViewAction viewAction) {
+    return register(new ViewActionWrapper(viewAction));
+  }
+
+  @Override
+  public void init() {
+    ListView listView = (ListView) activity.findViewById(listViewId);
+    listView.setOnItemClickListener(new Performer(listViewAction));
+  }
+
+  @Override
+  public void init(View parentView) {
+    ListView listView = (ListView) parentView;
+    listView.setOnItemClickListener(new Performer(listViewAction));
+  }
+
+  private class ViewActionWrapper implements ListViewAction {
+
+    private final ViewAction action;
+
+    public ViewActionWrapper(ViewAction action) {
+      this.action = action;
+    }
+
+    @Override
+    public boolean perform(AdapterView<?> adapterView, View view, int pos, long viewId) {
+      return perform();
+    }
+
+    @Override
+    public boolean perform() {
+      return action.perform();
+    }
+  }
+  /**
+   * Listens to the Click events and triggers the action to be performed.
+   *
+   * @author abhideep@ (Abhideep Singh)
+   */
+  private class Performer implements ListView.OnItemClickListener {
+
+    private final ListViewAction action;
+
+    public Performer(ListViewAction action) {
+      this.action = action;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int pos, long viewId) {
+      action.perform(adapterView, view, pos, viewId);
+    }
+  }
+}
