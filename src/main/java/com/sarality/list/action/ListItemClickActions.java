@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.sarality.action.ActionContext;
 import com.sarality.action.ActionInitializer;
 import com.sarality.action.ViewAction;
 
@@ -60,12 +61,12 @@ public class ListItemClickActions implements ActionInitializer {
 
     @Override
     public boolean perform(AdapterView<?> adapterView, View view, int pos, long viewId) {
-      return perform();
+      return perform(new ListActionContext(adapterView, view, pos, viewId));
     }
 
     @Override
-    public boolean perform() {
-      return action.perform();
+    public boolean perform(ActionContext actionContext) {
+      return action.perform(actionContext);
     }
   }
   /**
