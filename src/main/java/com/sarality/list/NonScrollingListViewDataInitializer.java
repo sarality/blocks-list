@@ -11,8 +11,10 @@ import com.sarality.datasource.DataSourceLoader;
 import java.util.List;
 
 /**
- * Creates the loader to load data from a DataSource and then initializes the ListView with the data once
- * the data has been loaded. Used to asynchronously load data
+ * Creates the loader to load data from a DataSource and then initializes the LinearLayout based List with the
+ * data once the data has been loaded.
+ * <p/>
+ * Used to asynchronously load data
  *
  * @author abhideep@ (Abhideep Singh)
  */

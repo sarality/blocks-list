@@ -11,11 +11,10 @@ import com.sarality.datasource.DataSource;
 import java.util.List;
 
 /**
- * Add description here
+ * Initializer for a List based on a LinearLayout that displays all rows
  *
  * @author abhideep@ (Abhideep Singh)
  */
-
 public class NonScrollingListViewInitializer<T, H> {
 
   private final Activity activity;
