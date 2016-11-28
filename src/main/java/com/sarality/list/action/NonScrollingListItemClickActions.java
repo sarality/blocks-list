@@ -3,18 +3,18 @@ package com.sarality.list.action;
 import android.app.Activity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 
 import com.sarality.action.ActionContext;
 import com.sarality.action.ActionInitializer;
 import com.sarality.action.ViewAction;
 
 /**
- * Registers Click Actions on a View or children of a View.
+ * Registers Click Actions on a Non Scrolling List View.
  *
  * @author abhideep@ (Abhideep Singh)
  */
-public class ListItemClickActions implements ActionInitializer {
+public class NonScrollingListItemClickActions implements ActionInitializer {
 
   private Activity activity;
   private int listViewId;
@@ -22,17 +22,17 @@ public class ListItemClickActions implements ActionInitializer {
   private ListItemSelector selector;
   // TODO(abhideep): Add support for clicks on sub item
 
-  public ListItemClickActions(Activity activity, int listViewId, ListItemSelector selector) {
+  public NonScrollingListItemClickActions(Activity activity, int listViewId) {
+    this(activity, listViewId, new ListItemSelector());
+  }
+
+  public NonScrollingListItemClickActions(Activity activity, int listViewId, ListItemSelector selector) {
     this.activity = activity;
     this.listViewId = listViewId;
     this.selector = selector;
   }
 
-  public ListItemClickActions(Activity activity, int listViewId) {
-    this(activity, listViewId, new ListItemSelector());
-  }
-
-  public ListItemClickActions register(ListViewAction listViewAction) {
+  public NonScrollingListItemClickActions register(ListViewAction listViewAction) {
     if (this.listViewAction != null) {
       throw new IllegalStateException("Cannot register multiple default actions for the same List with Id  " +
           activity.getResources().getResourceName(listViewId));
@@ -41,20 +41,28 @@ public class ListItemClickActions implements ActionInitializer {
     return this;
   }
 
-  public ListItemClickActions register(ViewAction viewAction) {
+  public NonScrollingListItemClickActions register(ViewAction viewAction) {
     return register(new ViewActionWrapper(viewAction));
   }
 
   @Override
   public void init() {
-    ListView listView = (ListView) activity.findViewById(listViewId);
-    listView.setOnItemClickListener(new Performer(listViewAction, selector));
+    LinearLayout listView = (LinearLayout) activity.findViewById(listViewId);
+    int numChildren = listView.getChildCount();
+    for (int i = 0; i < numChildren; i++) {
+      View child = listView.getChildAt(i);
+      child.setOnClickListener(new Performer(listViewAction, i, child.getId(), selector));
+    }
   }
 
   @Override
   public void init(View parentView) {
-    ListView listView = (ListView) parentView;
-    listView.setOnItemClickListener(new Performer(listViewAction, selector));
+    LinearLayout listView = (LinearLayout) parentView;
+    int numChildren = listView.getChildCount();
+    for (int i = 0; i < numChildren; i++) {
+      View child = listView.getChildAt(i);
+      child.setOnClickListener(new Performer(listViewAction, i, child.getId(), selector));
+    }
   }
 
   public ListItemSelector getSelector() {
@@ -84,20 +92,24 @@ public class ListItemClickActions implements ActionInitializer {
    *
    * @author abhideep@ (Abhideep Singh)
    */
-  private class Performer implements ListView.OnItemClickListener {
+  private class Performer implements View.OnClickListener {
 
     private final ListViewAction action;
+    private final int position;
+    private final long viewId;
     private final ListItemSelector selector;
 
-    public Performer(ListViewAction action, ListItemSelector selector) {
+    public Performer(ListViewAction action, int position, long viewId, ListItemSelector selector) {
       this.action = action;
+      this.position = position;
+      this.viewId = viewId;
       this.selector = selector;
     }
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int pos, long viewId) {
-      selector.toggleSelection(view, pos, viewId);
-      action.perform(adapterView, view, pos, viewId);
+    public void onClick(View view) {
+      selector.toggleSelection(view, position, viewId);
+      action.perform(null, view, position, viewId);
     }
   }
 }
