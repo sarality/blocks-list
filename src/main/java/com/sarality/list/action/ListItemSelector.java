@@ -2,9 +2,6 @@ package com.sarality.list.action;
 
 import android.view.View;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Keeps track of the selection for a List
  *
@@ -12,11 +9,19 @@ import org.slf4j.LoggerFactory;
  */
 public class ListItemSelector {
 
-  public static final Logger logger = LoggerFactory.getLogger(ListItemSelector.class);
+  private final int highlightResId;
 
   private boolean isSelected = false;
   private int selectedPosition = -1;
   private View selectedView = null;
+
+  public ListItemSelector(int highlightResId) {
+    this.highlightResId = highlightResId;
+  }
+
+  public ListItemSelector() {
+    this.highlightResId = android.R.drawable.list_selector_background;
+  }
 
   public boolean toggleSelection(View view, int pos, long viewId) {
     if (selectedView != null) {
@@ -24,6 +29,7 @@ public class ListItemSelector {
     }
     if (pos == selectedPosition) {
       if (isSelected) {
+        unhighlightRow(selectedView);
         isSelected = false;
         selectedView = null;
         selectedPosition = -1;
@@ -32,12 +38,15 @@ public class ListItemSelector {
         selectedView = view;
         selectedView.setSelected(true);
         selectedPosition = pos;
+        highlightRow(selectedView);
       }
     } else {
+      unhighlightRow(selectedView);
       isSelected = true;
       selectedView = view;
       selectedView.setSelected(true);
       selectedPosition = pos;
+      highlightRow(selectedView);
     }
     return true;
   }
@@ -52,5 +61,17 @@ public class ListItemSelector {
 
   public View getSelectedView() {
     return selectedView;
+  }
+
+  public void highlightRow(View view) {
+    if (view != null) {
+      view.setBackgroundResource(highlightResId);
+    }
+  }
+
+  private void unhighlightRow(View view) {
+    if (view != null) {
+      view.setBackgroundResource(android.R.color.transparent);
+    }
   }
 }

@@ -29,7 +29,7 @@ public class ListItemClickActions implements ActionInitializer {
   }
 
   public ListItemClickActions(Activity activity, int listViewId) {
-    this(activity, listViewId, new ListItemSelector());
+    this(activity, listViewId, null);
   }
 
   public ListItemClickActions register(ListViewAction listViewAction) {
@@ -96,7 +96,9 @@ public class ListItemClickActions implements ActionInitializer {
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int pos, long viewId) {
-      selector.toggleSelection(view, pos, viewId);
+      if (selector != null) {
+        selector.toggleSelection(view, pos, viewId);
+      }
       action.perform(adapterView, view, pos, viewId);
     }
   }
