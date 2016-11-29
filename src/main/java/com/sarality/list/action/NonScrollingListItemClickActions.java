@@ -22,10 +22,6 @@ public class NonScrollingListItemClickActions implements ActionInitializer {
   private ListItemSelector selector;
   // TODO(abhideep): Add support for clicks on sub item
 
-  public NonScrollingListItemClickActions(Activity activity, int listViewId) {
-    this(activity, listViewId, new ListItemSelector());
-  }
-
   public NonScrollingListItemClickActions(Activity activity, int listViewId, ListItemSelector selector) {
     this.activity = activity;
     this.listViewId = listViewId;
@@ -108,7 +104,9 @@ public class NonScrollingListItemClickActions implements ActionInitializer {
 
     @Override
     public void onClick(View view) {
-      selector.toggleSelection(view, position, viewId);
+      if (selector != null) {
+        selector.toggleSelection(view, position, viewId);
+      }
       action.perform(null, view, position, viewId);
     }
   }
