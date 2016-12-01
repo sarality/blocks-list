@@ -8,6 +8,7 @@ import android.widget.ListView;
 
 import com.sarality.datasource.ContentProviderSource;
 import com.sarality.datasource.DataSource;
+import com.sarality.list.search.DataMatcher;
 
 import java.util.List;
 
@@ -21,11 +22,13 @@ public class ListViewInitializer<T, H> {
   private final Activity activity;
   private final ListView listView;
   private final ListViewItemRenderer<T, H> renderer;
+  private final ListInstance<T, H> listInstance;
 
   // Optional fields
   private ListViewCursorAdapter<T, H> cursorAdapter;
 
   private View emptyListView = null;
+  private DataMatcher<T> dataMatcher = null;
 
   public ListViewInitializer(Activity activity, int listViewId, ListViewItemRenderer<T, H> renderer) {
     this(activity, (ListView) activity.findViewById(listViewId), renderer);
@@ -35,6 +38,7 @@ public class ListViewInitializer<T, H> {
     this.activity = activity;
     this.listView = listView;
     this.renderer = renderer;
+    this.listInstance = new ListInstance<>(listView);
   }
 
   public ListViewInitializer<T, H> withEmptyList(int viewId) {
@@ -42,9 +46,18 @@ public class ListViewInitializer<T, H> {
     return this;
   }
 
+  public ListViewInitializer<T, H> withFilter(DataMatcher<T> matcher) {
+    dataMatcher = matcher;
+    return this;
+  }
+
   public void init(DataSource<List<T>> dataSource) {
     dataSource.load();
     render(dataSource.getData());
+  }
+
+  public ListInstance<T, H> getListInstance() {
+    return listInstance;
   }
 
   public void initAsync(FragmentActivity activity, int loaderId, DataSource<List<T>> dataSource) {
@@ -69,7 +82,8 @@ public class ListViewInitializer<T, H> {
   }
 
   void render(List<T> dataList) {
-    ListViewAdapter<T, H> listViewAdapter = new ListViewAdapter<>(activity, dataList, renderer);
+    ListViewAdapter<T, H> listViewAdapter = new ListViewAdapter<>(activity, dataList, renderer, dataMatcher);
+    listInstance.setListViewAdapter(listViewAdapter);
     listView.setAdapter(listViewAdapter);
 
     if (emptyListView != null) {
