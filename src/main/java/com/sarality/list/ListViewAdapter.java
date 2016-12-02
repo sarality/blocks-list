@@ -63,10 +63,10 @@ class ListViewAdapter<T, H> extends BaseAdapter implements Filterable {
       LayoutInflater inflater = LayoutInflater.from(activity);
       rowView = inflater.inflate(renderer.getRowLayout(position, data), null);
 
-        H holder = renderer.createViewHolder(rowView);
-        if (holder != null) {
-          renderer.storeViewHolder(rowView, holder);
-        }
+      H holder = renderer.createViewHolder(rowView);
+      if (holder != null) {
+        renderer.storeViewHolder(rowView, holder);
+      }
     }
 
     H viewHolder = renderer.retrieveViewHolder(rowView);
@@ -77,6 +77,10 @@ class ListViewAdapter<T, H> extends BaseAdapter implements Filterable {
   @Override
   public Filter getFilter() {
     return resultsFilter;
+  }
+
+  public List<T> getDataList() {
+    return dataList;
   }
 
   private class DataFilter extends Filter {

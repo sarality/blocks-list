@@ -2,6 +2,8 @@ package com.sarality.list;
 
 import android.widget.ListView;
 
+import java.util.List;
+
 /**
  * An instance of the List initialized by the ListViewInitializer
  *
@@ -30,4 +32,13 @@ public class ListInstance<T, H> {
   public void refresh() {
     listViewAdapter.notifyDataSetChanged();
   }
+
+  public List<T> getDataList() {
+    if (listViewAdapter == null) {
+      return null;
+    }
+    return listViewAdapter.getDataList();
+  }
+
+
 }
