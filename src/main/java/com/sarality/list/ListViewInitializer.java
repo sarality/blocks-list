@@ -51,9 +51,10 @@ public class ListViewInitializer<T, H> {
     return this;
   }
 
-  public void init(DataSource<List<T>> dataSource) {
+  public ListInstance<T, H> init(DataSource<List<T>> dataSource) {
     dataSource.load();
     render(dataSource.getData());
+    return this.listInstance;
   }
 
   public ListInstance<T, H> getListInstance() {
@@ -73,7 +74,8 @@ public class ListViewInitializer<T, H> {
       listView.setEmptyView(emptyListView);
     }
 
-    ListViewCursorInitializer<T> dataInitializer = new ListViewCursorInitializer<>(activity, contentProviderSource, this);
+    ListViewCursorInitializer<T> dataInitializer =
+        new ListViewCursorInitializer<>(activity, contentProviderSource, this);
     activity.getSupportLoaderManager().initLoader(loaderId, null, dataInitializer).forceLoad();
   }
 
