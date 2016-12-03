@@ -10,6 +10,7 @@ import com.sarality.datasource.ContentProviderSource;
 import com.sarality.datasource.DataSource;
 import com.sarality.list.search.DataMatcher;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -29,6 +30,8 @@ public class ListViewInitializer<T, H> {
 
   private View emptyListView = null;
   private DataMatcher<T> dataMatcher = null;
+  private boolean sortByScore;
+  private Comparator<T> defaultSorter;
 
   public ListViewInitializer(Activity activity, int listViewId, ListViewItemRenderer<T, H> renderer) {
     this(activity, (ListView) activity.findViewById(listViewId), renderer);
@@ -47,7 +50,13 @@ public class ListViewInitializer<T, H> {
   }
 
   public ListViewInitializer<T, H> withFilter(DataMatcher<T> matcher) {
-    dataMatcher = matcher;
+    return withFilter(matcher, false, null);
+  }
+
+  public ListViewInitializer<T, H> withFilter(DataMatcher<T> matcher, boolean sortByScore, Comparator<T> defaultSorter) {
+    this.dataMatcher = matcher;
+    this.sortByScore = sortByScore;
+    this.defaultSorter = defaultSorter;
     return this;
   }
 
@@ -84,7 +93,8 @@ public class ListViewInitializer<T, H> {
   }
 
   void render(List<T> dataList) {
-    ListViewAdapter<T, H> listViewAdapter = new ListViewAdapter<>(activity, dataList, renderer, dataMatcher);
+    ListViewAdapter<T, H> listViewAdapter = new ListViewAdapter<>(activity, dataList, renderer, dataMatcher,
+        sortByScore, defaultSorter);
     listInstance.setListViewAdapter(listViewAdapter);
     listView.setAdapter(listViewAdapter);
 
