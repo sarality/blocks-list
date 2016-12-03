@@ -9,9 +9,11 @@ import android.widget.Filter;
 import android.widget.Filterable;
 
 import com.sarality.list.search.DataMatcher;
+import com.sarality.list.search.FilteredResultSorter;
 import com.sarality.list.search.MatchScore;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -28,7 +30,7 @@ class ListViewAdapter<T, H> extends BaseAdapter implements Filterable {
   private final Filter resultsFilter;
 
   ListViewAdapter(Activity activity, List<T> dataList, ListViewItemRenderer<T, H> renderer,
-      DataMatcher<T> dataMatcher) {
+      DataMatcher<T> dataMatcher, boolean sortByScore, Comparator<T> defaultComparator) {
     this.activity = activity;
     this.dataList = dataList;
     this.displayList.addAll(dataList);
@@ -85,24 +87,42 @@ class ListViewAdapter<T, H> extends BaseAdapter implements Filterable {
 
   private class DataFilter extends Filter {
     private final DataMatcher<T> matcher;
+    private final boolean sortByScore;
+    private final Comparator<T> defaultComparator;
+
+    private DataFilter(DataMatcher<T> matcher, boolean sortByScore, Comparator<T> defaultComparator) {
+      this.matcher = matcher;
+      this.sortByScore = sortByScore;
+      this.defaultComparator = defaultComparator;
+    }
 
     private DataFilter(DataMatcher<T> matcher) {
-      this.matcher = matcher;
+      this(matcher, false, null);
     }
 
     @Override
     protected FilterResults performFiltering(CharSequence charSequence) {
       FilterResults results = new FilterResults();
       List<T> filteredDataList = new ArrayList<>();
-      String searchText = charSequence.toString().toUpperCase();
+      FilteredResultSorter<T> sorter = new FilteredResultSorter<>(defaultComparator);
+      String searchText = charSequence.toString();
       for (T data : dataList) {
         MatchScore score = matcher.matches(data, searchText);
         if (score != null && score.isMatch()) {
           filteredDataList.add(data);
+          if (sortByScore) {
+            sorter.addItem(score, data);
+          }
         }
       }
-      results.values = filteredDataList;
-      results.count = filteredDataList.size();
+      if (sortByScore) {
+        sorter.sort();
+        results.values = sorter.getDataList();
+        results.count = sorter.getDataList().size();
+      } else {
+        results.values = filteredDataList;
+        results.count = filteredDataList.size();
+      }
 
       return results;
     }
