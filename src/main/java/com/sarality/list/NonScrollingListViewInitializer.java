@@ -61,6 +61,7 @@ public class NonScrollingListViewInitializer<T, H> {
 
     LayoutInflater inflater = LayoutInflater.from(activity);
     int position = 0;
+    listView.removeAllViews();
     for (T data : dataList) {
       View rowView = inflater.inflate(renderer.getRowLayout(position, data), null);
       H viewHolder = renderer.createViewHolder(rowView);
