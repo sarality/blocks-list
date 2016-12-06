@@ -21,10 +21,6 @@ public class ListInstance<T, H> {
     this.listViewAdapter = listViewAdapter;
   }
 
-  public ListView getListView() {
-    return listView;
-  }
-
   public void filter(String filterText) {
     listViewAdapter.getFilter().filter(filterText);
   }
@@ -39,6 +35,15 @@ public class ListInstance<T, H> {
     }
     return listViewAdapter.getDataList();
   }
+
+  public void setDataList(List<T> sourceList) {
+    listViewAdapter.setDataList(sourceList);
+  }
+
+  public int getDisplayCount() {
+    return listViewAdapter.getCount();
+  }
+
 
 
 }

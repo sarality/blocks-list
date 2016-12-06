@@ -82,7 +82,16 @@ class ListViewAdapter<T, H> extends BaseAdapter implements Filterable {
   }
 
   public List<T> getDataList() {
-    return dataList;
+    List<T> copyList = new ArrayList<>();
+    copyList.addAll(dataList);
+    return copyList;
+  }
+
+  public void setDataList(List<T> sourceList) {
+    dataList.clear();
+    displayList.clear();
+    dataList.addAll(sourceList);
+    displayList.addAll(sourceList);
   }
 
   private class DataFilter extends Filter {
