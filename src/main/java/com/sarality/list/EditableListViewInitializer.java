@@ -25,6 +25,9 @@ public class EditableListViewInitializer<T, H> {
 
   private View emptyListView = null;
 
+  //TODO(Satya) - We need to make changes to this so it uses a ListView instead of a LinearLayout - will require work
+  // on saving/loading data from formdata when views are recycled.
+
   public EditableListViewInitializer(Activity activity, int listViewId, EditableListViewItemRenderer<T, H> renderer) {
     this(activity, (LinearLayout) activity.findViewById(listViewId), renderer);
   }
