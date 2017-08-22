@@ -52,11 +52,16 @@ public class NonScrollingListViewInitializer<T, H> {
 
   void render(List<T> dataList) {
     if (dataList == null || dataList.isEmpty()) {
-      emptyListView.setVisibility(View.VISIBLE);
+      if (emptyListView != null) {
+        emptyListView.setVisibility(View.VISIBLE);
+      }
       listView.setVisibility(View.GONE);
       return;
     }
-    emptyListView.setVisibility(View.GONE);
+    if (emptyListView != null) {
+      emptyListView.setVisibility(View.GONE);
+    }
+
     listView.setVisibility(View.VISIBLE);
 
     LayoutInflater inflater = LayoutInflater.from(activity);
