@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/padding_list_item_text_vertical"
+    android:paddingBottom="@dimen/padding_list_item_text_vertical"
+    android:paddingLeft="@dimen/padding_list_item"
+    android:paddingStart="@dimen/padding_list_item"
+    android:paddingRight="@dimen/padding_list_item"
+    android:paddingEnd="@dimen/padding_list_item">
+  <TextView
+      android:id="@+id/list_item_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textColor="@android:color/black"
+      android:textSize="@dimen/text_size_list_item_primary"/>
+  <TextView
+      android:id="@+id/list_item_line2"
+      android:layout_below="@id/list_item_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textColor="@android:color/black"
+      android:textSize="@dimen/text_size_list_item_secondary"/>
+  <TextView
+      android:id="@+id/list_item_line3"
+      android:layout_below="@id/list_item_line2"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textColor="@android:color/black"
+      android:textSize="@dimen/text_size_list_item_secondary"/>
+</RelativeLayout>

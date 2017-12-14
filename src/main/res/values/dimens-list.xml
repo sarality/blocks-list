@@ -1,0 +1,30 @@
+<resources>
+  <!-- Tile Size -->
+  <dimen name="height_list_item_one_line">56dp</dimen>
+  <dimen name="height_list_item_one_line_dense">48dp</dimen>
+
+  <dimen name="height_list_item_two_lines">72dp</dimen>
+  <dimen name="height_list_item_two_lines_dense">60dp</dimen>
+
+  <dimen name="height_list_item_three_lines">88dp</dimen>
+
+  <!-- -->
+  <dimen name="icon_size_list_item_avatar">40dp</dimen>
+
+  <!-- Padding -->
+  <dimen name="padding_list_item_avatar">16dp</dimen>
+  <dimen name="padding_list_item_text">72dp</dimen>
+  <dimen name="padding_list_item_text_vertical">20dp</dimen>
+  <dimen name="padding_list_item_icon">16dp</dimen>
+  <dimen name="padding_list_item">16dp</dimen>
+  <dimen name="padding_list_item_content">4dp</dimen>
+
+  <dimen name="padding_list_top">8dp</dimen>
+  <dimen name="padding_list_top_dense">4dp</dimen>
+
+  <!-- Text Size -->
+  <dimen name="text_size_list_item_avatar">20sp</dimen>
+  <dimen name="text_size_list_item_primary">16sp</dimen>
+  <dimen name="text_size_list_item_secondary">14sp</dimen>
+  <dimen name="text_size_list_item_dense">13sp</dimen>
+</resources>
