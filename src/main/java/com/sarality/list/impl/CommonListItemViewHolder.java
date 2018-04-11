@@ -1,5 +1,6 @@
 package com.sarality.list.impl;
 
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 /**
@@ -12,4 +13,5 @@ class CommonListItemViewHolder {
   TextView titleTextView;
   TextView line2TextView;
   TextView line3TextView;
+  CheckBox secondaryActionCheckbox;
 }
