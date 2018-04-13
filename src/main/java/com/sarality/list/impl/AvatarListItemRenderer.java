@@ -9,18 +9,18 @@ import com.sarality.list.R;
  *
  * @author abhideep@ (Abhideep Singh)
  */
-public abstract class AvatarListItemRender<T> extends SimpleListItemRender<T> {
+public abstract class AvatarListItemRenderer<T> extends CommonListItemRenderer<T, AvatarListItemViewHolder> {
 
-  public AvatarListItemRender(boolean displayLine2, boolean displayLine3) {
+  public AvatarListItemRenderer(boolean displayLine2, boolean displayLine3) {
     this(R.layout.avatar_list_item, displayLine2, displayLine3);
   }
 
-  public AvatarListItemRender(int itemLayoutId, boolean displayLine2, boolean displayLine3) {
+  public AvatarListItemRenderer(int itemLayoutId, boolean displayLine2, boolean displayLine3) {
     super(itemLayoutId, displayLine2, displayLine3);
   }
 
   @Override
-  public void render(View view, CommonListItemViewHolder viewHolder, int position, T data) {
+  public void render(View view, AvatarListItemViewHolder viewHolder, int position, T data) {
     super.render(view, viewHolder, position, data);
 
     String displayChar = getAvatarChar(position, data);
@@ -40,9 +40,14 @@ public abstract class AvatarListItemRender<T> extends SimpleListItemRender<T> {
   protected abstract int getAvatarBackgroundResource(int position, T data);
 
   @Override
-  public CommonListItemViewHolder createViewHolder(View view) {
-    CommonListItemViewHolder holder = super.createViewHolder(view);
+  public AvatarListItemViewHolder createViewHolder(View view) {
+    AvatarListItemViewHolder holder = super.createViewHolder(view);
     holder.avatarTextView = view.findViewById(R.id.list_item_avatar);
     return holder;
+  }
+
+  @Override
+  protected final AvatarListItemViewHolder newViewHolder() {
+    return new AvatarListItemViewHolder();
   }
 }

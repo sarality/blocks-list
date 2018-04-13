@@ -6,27 +6,28 @@ import com.sarality.list.BaseListViewItemRenderer;
 import com.sarality.list.R;
 
 /**
- * Implementation of the List View Item Renderer for a Simple Layout with one to three text lines.
+ * Common implementation of the List View Item Renderer with one to three text lines.
  *
  * @author abhideep@ (Abhideep Singh)
  */
-public abstract class SimpleListItemRender<T> extends BaseListViewItemRenderer<T, CommonListItemViewHolder> {
+abstract class CommonListItemRenderer<T, H extends SimpleListItemViewHolder>
+    extends BaseListViewItemRenderer<T, H> {
 
   private final boolean displayLine2;
   private final boolean displayLine3;
 
-  public SimpleListItemRender(boolean displayLine2, boolean displayLine3) {
+  CommonListItemRenderer(boolean displayLine2, boolean displayLine3) {
     this(R.layout.simple_list_item, displayLine2, displayLine3);
   }
 
-  SimpleListItemRender(int itemLayoutId, boolean displayLine2, boolean displayLine3) {
+  CommonListItemRenderer(int itemLayoutId, boolean displayLine2, boolean displayLine3) {
     super(itemLayoutId);
     this.displayLine2 = displayLine2;
     this.displayLine3 = displayLine3;
   }
 
   @Override
-  public void render(View view, CommonListItemViewHolder viewHolder, int position, T data) {
+  public void render(View view, H viewHolder, int position, T data) {
     viewHolder.titleTextView.setText(getTitle(position, data));
 
     if (displayLine2) {
@@ -58,11 +59,13 @@ public abstract class SimpleListItemRender<T> extends BaseListViewItemRenderer<T
   protected abstract String getLine3(int position, T data);
 
   @Override
-  public CommonListItemViewHolder createViewHolder(View view) {
-    CommonListItemViewHolder holder = new CommonListItemViewHolder();
+  public H createViewHolder(View view) {
+    H holder = newViewHolder();
     holder.titleTextView = view.findViewById(R.id.list_item_title);
     holder.line2TextView = view.findViewById(R.id.list_item_line2);
     holder.line3TextView = view.findViewById(R.id.list_item_line3);
     return holder;
   }
+
+  protected abstract H newViewHolder();
 }
