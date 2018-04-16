@@ -36,9 +36,7 @@ public abstract class IconListItemRenderer<T> extends CommonListItemRenderer<T, 
       @Override
       public void onClick(View view) {
         CheckBox iconView = (CheckBox) view;
-        if (performIconAction(view, position, data)) {
-          render(view, viewHolder, position, data);
-        } else {
+        if (!performIconAction(view, position, data)) {
           iconView.toggle();
         }
       }
