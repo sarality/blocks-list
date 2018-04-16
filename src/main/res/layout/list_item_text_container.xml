@@ -6,9 +6,13 @@
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_weight="0.7"
+    android:paddingLeft="@dimen/padding_list_item"
+    android:paddingStart="@dimen/padding_list_item"
+    android:paddingRight="@dimen/padding_list_item"
+    android:paddingEnd="@dimen/padding_list_item"
     android:paddingBottom="@dimen/padding_list_item_text_vertical"
     android:paddingTop="@dimen/padding_list_item_text_vertical"
-    tools:showIn="@layout/secondary_action_list_item">
+    tools:showIn="@layout/icon_list_item">
 
   <TextView
       android:id="@+id/list_item_title"

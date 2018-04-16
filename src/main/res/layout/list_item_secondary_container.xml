@@ -13,7 +13,7 @@
     android:paddingRight="@dimen/padding_list_item"
     android:paddingStart="@dimen/padding_list_item_avatar"
     android:paddingTop="@dimen/padding_list_item_text_vertical"
-    tools:showIn="@layout/secondary_action_list_item">
+    tools:showIn="@layout/icon_list_item">
 
   <CheckBox
       android:id="@+id/list_item_secondary_action"
