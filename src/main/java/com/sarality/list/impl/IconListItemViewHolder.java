@@ -8,6 +8,6 @@ import android.widget.CheckBox;
  * @author satya (satya puniani)
  */
 
-class IconListitemViewHolder extends SimpleListItemViewHolder {
+class IconListItemViewHolder extends SimpleListItemViewHolder {
   CheckBox iconActionCheckBox;
 }

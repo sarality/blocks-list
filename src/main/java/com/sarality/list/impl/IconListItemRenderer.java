@@ -11,7 +11,7 @@ import com.sarality.list.R;
  * @author satya (satya puniani)
  */
 
-public abstract class IconListItemRenderer<T> extends CommonListItemRenderer<T, IconListitemViewHolder> {
+public abstract class IconListItemRenderer<T> extends CommonListItemRenderer<T, IconListItemViewHolder> {
 
   public IconListItemRenderer(boolean displayLine2, boolean displayLine3) {
     this(R.layout.icon_list_item, displayLine2, displayLine3);
@@ -22,7 +22,7 @@ public abstract class IconListItemRenderer<T> extends CommonListItemRenderer<T, 
   }
 
   @Override
-  public void render(final View view, final IconListitemViewHolder viewHolder, final int position, final T data) {
+  public void render(final View view, final IconListItemViewHolder viewHolder, final int position, final T data) {
     super.render(view, viewHolder, position, data);
 
     viewHolder.iconActionCheckBox.setChecked(getIconActionState(position, data));
@@ -47,15 +47,15 @@ public abstract class IconListItemRenderer<T> extends CommonListItemRenderer<T, 
 
 
   @Override
-  public IconListitemViewHolder createViewHolder(View view) {
-    IconListitemViewHolder viewHolder = super.createViewHolder(view);
+  public IconListItemViewHolder createViewHolder(View view) {
+    IconListItemViewHolder viewHolder = super.createViewHolder(view);
     viewHolder.iconActionCheckBox = view.findViewById(R.id.list_item_secondary_action);
     return viewHolder;
   }
 
   @Override
-  protected IconListitemViewHolder newViewHolder() {
-    return new IconListitemViewHolder();
+  protected IconListItemViewHolder newViewHolder() {
+    return new IconListItemViewHolder();
   }
 
   protected abstract boolean performIconAction(View view, int position, T data);
