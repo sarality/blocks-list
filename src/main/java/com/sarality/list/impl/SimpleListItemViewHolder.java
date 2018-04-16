@@ -4,12 +4,11 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 /**
- * The View Holder common to all predefined layouts that have layouts.
+ * The View Holder for views used by the Simple text based list.
  *
  * @author abhideep@ (Abhideep Singh)
  */
-class CommonListItemViewHolder {
-  TextView avatarTextView;
+class SimpleListItemViewHolder {
   TextView titleTextView;
   TextView line2TextView;
   TextView line3TextView;
