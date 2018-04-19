@@ -5,6 +5,8 @@ import android.view.View;
 import com.sarality.list.BaseListViewItemRenderer;
 import com.sarality.list.R;
 
+import java.util.HashMap;
+
 /**
  * Common implementation of the List View Item Renderer with one to three text lines.
  *
@@ -50,7 +52,16 @@ abstract class CommonListItemRenderer<T, H extends SimpleListItemViewHolder>
     } else {
       viewHolder.line3TextView.setVisibility(View.GONE);
     }
+
+    HashMap<Integer, Object> tagsMap = getTags(position, data);
+    if (tagsMap != null) {
+      for (Integer resourceId : tagsMap.keySet()) {
+        view.setTag(resourceId, tagsMap.get(resourceId));
+      }
+    }
   }
+
+  protected abstract HashMap<Integer, Object> getTags(int position, T data);
 
   protected abstract String getTitle(int position, T data);
 
