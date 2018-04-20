@@ -7,6 +7,6 @@ import android.widget.TextView;
  *
  * @author abhideep@ (Abhideep Singh)
  */
-class AvatarListItemViewHolder extends SimpleListItemViewHolder {
+class AvatarWithIconListItemViewHolder extends IconListItemViewHolder {
   TextView avatarTextView;
 }
