@@ -3,6 +3,8 @@ package com.sarality.list.impl;
 import android.view.View;
 import android.widget.CheckBox;
 
+import com.sarality.action.ActionContext;
+import com.sarality.action.ViewAction;
 import com.sarality.list.R;
 
 /**
@@ -32,17 +34,23 @@ public abstract class IconListItemRenderer<T> extends CommonListItemRenderer<T, 
       viewHolder.iconActionCheckBox.setButtonDrawable(drawableResId);
     }
 
-    View.OnClickListener secondaryActionListener = new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        CheckBox iconView = (CheckBox) view;
-        if (!performIconAction(view, position, data)) {
-          iconView.toggle();
-        }
-      }
-    };
+    final ViewAction secondaryAction = setupSecondaryAction(position, data);
 
-    viewHolder.iconActionCheckBox.setOnClickListener(secondaryActionListener);
+    if (secondaryAction != null) {
+      View.OnClickListener secondaryActionListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View clickedView) {
+          CheckBox iconView = (CheckBox) clickedView;
+          if (!secondaryAction.perform(new ActionContext(iconView))) {
+            iconView.toggle();
+          }
+        }
+      };
+
+      viewHolder.iconActionCheckBox.setOnClickListener(secondaryActionListener);
+
+    }
+
   }
 
 
@@ -58,7 +66,7 @@ public abstract class IconListItemRenderer<T> extends CommonListItemRenderer<T, 
     return new IconListItemViewHolder();
   }
 
-  protected abstract boolean performIconAction(View view, int position, T data);
+  protected abstract ViewAction setupSecondaryAction(int position, T data);
 
   protected abstract boolean getIconActionState(int position, T data);
 
