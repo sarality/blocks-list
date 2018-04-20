@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:id="@+id/list_item_avatar_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:paddingEnd="@dimen/padding_list_item"
+    android:paddingLeft="@dimen/padding_list_item_avatar"
+    android:paddingRight="@dimen/padding_list_item"
+    android:paddingStart="@dimen/padding_list_item_avatar"
+    tools:showIn="@layout/avatar_secondary_action_list_item">
+
+  <TextView
+      android:id="@+id/list_item_avatar"
+      android:layout_width="@dimen/icon_size_list_item_avatar"
+      android:layout_height="@dimen/icon_size_list_item_avatar"
+      android:background="@color/colorPrimary"
+      android:gravity="center"
+      android:textColor="@android:color/white"
+      android:textSize="@dimen/text_size_list_item_avatar"/>
+
+  <ImageView
+      android:id="@+id/list_item_avatar_icon"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:contentDescription="@null"/>
+</FrameLayout>
+
