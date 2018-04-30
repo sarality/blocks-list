@@ -7,11 +7,6 @@ import com.sarality.action.ActionContext;
 import com.sarality.action.ViewAction;
 import com.sarality.list.R;
 
-import java.util.Locale;
-import java.util.TimeZone;
-
-import hirondelle.date4j.DateTime;
-
 /**
  * Abstract Base Class of the List View Item Renderer where each item has a secondary action
  *
@@ -66,8 +61,8 @@ public abstract class BaseIconListItemRenderer<T, H extends IconListItemViewHold
     }
 
     if (displayTimeStamp) {
-      DateTime receivedTime = getReceivedTimeStamp(position, data);
-      viewHolder.receivedTimeTextView.setText(formatTimeStamp(receivedTime));
+      String formattedTime = getDisplayTime(position, data);
+      viewHolder.receivedTimeTextView.setText(formattedTime == null ? "" : formattedTime);
       viewHolder.receivedTimeTextView.setVisibility(View.VISIBLE);
     } else {
       viewHolder.receivedTimeTextView.setVisibility(View.GONE);
@@ -82,45 +77,8 @@ public abstract class BaseIconListItemRenderer<T, H extends IconListItemViewHold
     viewHolder.receivedTimeTextView = view.findViewById(R.id.list_item_received_time);
     return viewHolder;
   }
-
-  private String formatTimeStamp(DateTime timeStamp) {
-    if (timeStamp == null) {
-      return "-";
-    }
-
-    DateTime today = DateTime.today(TimeZone.getDefault());
-    DateTime now = DateTime.now(TimeZone.getDefault());
-    Integer numDays = timeStamp.numDaysFrom(today);
-    if (numDays < 0) {
-      numDays = numDays * -1;
-      return numDays.toString() + " days later";
-
-    }
-
-    if (numDays == 0) {
-      return timeStamp.format("h:mm a", Locale.getDefault());
-    }
-
-    if (numDays == 1) {
-      DateTime oneLessDay = now.minusDays(1);
-
-      if (oneLessDay.lteq(timeStamp)) {
-        Long numSeconds = timeStamp.numSecondsFrom(now);
-        if (numSeconds < 3600) {
-          return (numSeconds / 60) + " minute(s) ago";
-        }
-        return (numSeconds / 3600) + " hour(s) ago";
-      }
-
-      return "Yesterday";
-    }
-
-    return numDays.toString() + " days ago";
-
-
-  }
-
-  protected abstract DateTime getReceivedTimeStamp(int position, T data);
+  
+  protected abstract String getDisplayTime(int position, T data);
 
   protected abstract ViewAction setupSecondaryAction(int position, T data);
 
