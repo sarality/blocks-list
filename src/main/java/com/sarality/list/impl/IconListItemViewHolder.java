@@ -1,6 +1,7 @@
 package com.sarality.list.impl;
 
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 /**
  * View holder used by list items which have simple list + icon
@@ -10,4 +11,5 @@ import android.widget.CheckBox;
 
 class IconListItemViewHolder extends SimpleListItemViewHolder {
   CheckBox iconActionCheckBox;
+  TextView receivedTimeTextView;
 }
