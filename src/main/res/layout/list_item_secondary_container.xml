@@ -6,12 +6,12 @@
     android:layout_width="0dp"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:layout_weight="0.3"
+    android:layout_weight="0.35"
     android:paddingBottom="@dimen/padding_list_item_text_vertical"
     android:paddingEnd="@dimen/padding_list_item"
-    android:paddingLeft="@dimen/padding_list_item_avatar"
+    android:paddingLeft="@dimen/padding_list_item_content"
     android:paddingRight="@dimen/padding_list_item"
-    android:paddingStart="@dimen/padding_list_item_avatar"
+    android:paddingStart="@dimen/padding_list_item_content"
     android:paddingTop="@dimen/padding_list_item_text_vertical"
     tools:showIn="@layout/icon_list_item">
 
