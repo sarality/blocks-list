@@ -13,11 +13,20 @@ public abstract class AvatarWithIconListItemRenderer<T>
     extends BaseIconListItemRenderer<T, AvatarWithIconListItemViewHolder> {
 
   public AvatarWithIconListItemRenderer(boolean displayLine2, boolean displayLine3) {
-    this(R.layout.avatar_secondary_action_list_item, displayLine2, displayLine3);
+    this(R.layout.avatar_secondary_action_list_item, displayLine2, displayLine3, false);
+  }
+
+  public AvatarWithIconListItemRenderer(boolean displayLine2, boolean displayLine3, boolean displayTimeStamp) {
+    this(R.layout.avatar_secondary_action_list_item, displayLine2, displayLine3, displayTimeStamp);
   }
 
   public AvatarWithIconListItemRenderer(int itemLayoutId, boolean displayLine2, boolean displayLine3) {
-    super(itemLayoutId, displayLine2, displayLine3);
+    this(itemLayoutId, displayLine2, displayLine3, false);
+  }
+
+  public AvatarWithIconListItemRenderer(int itemLayoutId, boolean displayLine2, boolean displayLine3,
+      boolean displayTimeStamp) {
+    super(R.layout.avatar_secondary_action_list_item, displayLine2, displayLine3, displayTimeStamp);
   }
 
   @Override
