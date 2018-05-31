@@ -1,5 +1,6 @@
 package com.sarality.list.impl;
 
+import android.content.res.Resources;
 import android.view.View;
 import android.widget.CheckBox;
 
@@ -61,7 +62,7 @@ public abstract class BaseIconListItemRenderer<T, H extends IconListItemViewHold
     }
 
     if (displayTimeStamp) {
-      String formattedTime = getDisplayTime(position, data);
+      String formattedTime = getDisplayTime(view.getResources(), position, data);
       viewHolder.receivedTimeTextView.setText(formattedTime == null ? "" : formattedTime);
       viewHolder.receivedTimeTextView.setVisibility(View.VISIBLE);
     } else {
@@ -78,7 +79,7 @@ public abstract class BaseIconListItemRenderer<T, H extends IconListItemViewHold
     return viewHolder;
   }
   
-  protected abstract String getDisplayTime(int position, T data);
+  protected abstract String getDisplayTime(Resources resources, int position, T data);
 
   protected abstract ViewAction setupSecondaryAction(int position, T data);
 
