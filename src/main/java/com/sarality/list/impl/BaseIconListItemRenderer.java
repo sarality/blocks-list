@@ -37,11 +37,11 @@ public abstract class BaseIconListItemRenderer<T, H extends IconListItemViewHold
   public void render(final View view, final H viewHolder, final int position, final T data) {
     super.render(view, viewHolder, position, data);
 
-    viewHolder.iconActionCheckBox.setChecked(getIconActionState(position, data));
-
     int drawableResId = getIconDrawable(position, data);
     if (drawableResId > 0) {
-      viewHolder.iconActionCheckBox.setButtonDrawable(drawableResId);
+      viewHolder.actionIconImageView.setBackgroundResource(drawableResId);
+    } else {
+      viewHolder.actionIconImageView.setBackgroundResource(0);
     }
 
     final ViewAction secondaryAction = setupSecondaryAction(position, data);
@@ -57,8 +57,7 @@ public abstract class BaseIconListItemRenderer<T, H extends IconListItemViewHold
         }
       };
 
-      viewHolder.iconActionCheckBox.setOnClickListener(secondaryActionListener);
-
+      viewHolder.actionIconImageView.setOnClickListener(secondaryActionListener);
     }
 
     if (displayTimeStamp) {
@@ -74,7 +73,7 @@ public abstract class BaseIconListItemRenderer<T, H extends IconListItemViewHold
   @Override
   public H createViewHolder(View view) {
     H viewHolder = super.createViewHolder(view);
-    viewHolder.iconActionCheckBox = view.findViewById(R.id.list_item_secondary_action);
+    viewHolder.actionIconImageView = view.findViewById(R.id.list_item_secondary_action);
     viewHolder.receivedTimeTextView = view.findViewById(R.id.list_item_received_time);
     return viewHolder;
   }
@@ -82,8 +81,6 @@ public abstract class BaseIconListItemRenderer<T, H extends IconListItemViewHold
   protected abstract String getDisplayTime(Resources resources, int position, T data);
 
   protected abstract ViewAction setupSecondaryAction(int position, T data);
-
-  protected abstract boolean getIconActionState(int position, T data);
 
   protected abstract int getIconDrawable(int position, T data);
 
