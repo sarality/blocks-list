@@ -26,17 +26,18 @@
       android:textSize="@dimen/text_size_list_item_dense"/>
 
 
-  <CheckBox
+  <ImageView
       android:id="@+id/list_item_secondary_action"
+      android:contentDescription="@null"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"
       android:layout_alignParentEnd="true"
       android:layout_alignParentRight="true"
       android:layout_below="@+id/list_item_received_time"
+      android:gravity="center"
       android:focusable="false"
-      android:focusableInTouchMode="false"
-      android:gravity="center"/>
+      android:focusableInTouchMode="false"/>
 </RelativeLayout>
 
 
