@@ -1,5 +1,6 @@
 package com.sarality.list.impl;
 
+import android.content.res.Resources;
 import android.view.View;
 
 import com.sarality.list.BaseListViewItemRenderer;
@@ -17,6 +18,7 @@ abstract class CommonListItemRenderer<T, H extends SimpleListItemViewHolder>
 
   private final boolean displayLine2;
   private final boolean displayLine3;
+  private View contextView;
 
   CommonListItemRenderer(boolean displayLine2, boolean displayLine3) {
     this(R.layout.simple_list_item, displayLine2, displayLine3);
@@ -28,8 +30,17 @@ abstract class CommonListItemRenderer<T, H extends SimpleListItemViewHolder>
     this.displayLine3 = displayLine3;
   }
 
+  private void setContextView(View view) {
+    this.contextView = view;
+  }
+
+  protected Resources getResources() {
+    return contextView.getResources();
+  }
+
   @Override
   public void render(View view, H viewHolder, int position, T data) {
+    setContextView(view);
     viewHolder.titleTextView.setText(getTitle(position, data));
 
     if (displayLine2) {
