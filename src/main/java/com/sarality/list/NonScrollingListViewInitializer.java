@@ -39,6 +39,11 @@ public class NonScrollingListViewInitializer<T, H> {
     return this;
   }
 
+  public NonScrollingListViewInitializer<T, H> withEmptyList(View contextView, int viewId) {
+    emptyListView = contextView.findViewById(viewId);
+    return this;
+  }
+
   public void init(DataSource<List<T>> dataSource) {
     dataSource.load();
     render(dataSource.getData());
