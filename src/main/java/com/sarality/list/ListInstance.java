@@ -44,6 +44,10 @@ public class ListInstance<T, H> {
     return listViewAdapter.getCount();
   }
 
+  public List<T> getFilteredList() {
+    return listViewAdapter.getFilteredList();
+  }
+
 
 
 }

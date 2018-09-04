@@ -94,6 +94,10 @@ class ListViewAdapter<T, H> extends BaseAdapter implements Filterable {
     displayList.addAll(sourceList);
   }
 
+  public List<T> getFilteredList() {
+    return new ArrayList<>(displayList);
+  }
+
   private class DataFilter extends Filter {
     private final DataMatcher<T> matcher;
     private final boolean sortByScore;
