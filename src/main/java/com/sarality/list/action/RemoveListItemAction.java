@@ -22,6 +22,6 @@ public class RemoveListItemAction implements ViewAction {
   @Override
   public boolean perform(ActionContext actionContext) {
     ((ViewGroup) itemView.getParent()).removeView(itemView);
-    return false;
+    return true;
   }
 }
