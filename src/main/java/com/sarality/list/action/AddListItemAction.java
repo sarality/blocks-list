@@ -10,7 +10,7 @@ import com.sarality.action.ViewAction;
 import com.sarality.list.ListViewItemRenderer;
 
 /**
- * Action that adds a row to an existing Row.
+ * Action that adds a row to an existing List.
  *
  * @author abhideep@ (Abhideep Singh)
  */
@@ -38,6 +38,6 @@ public class AddListItemAction<T, H> implements ViewAction {
     renderer.render(rowView, viewHolder, position, itemData);
 
     listView.addView(rowView);
-    return false;
+    return true;
   }
 }
