@@ -27,7 +27,7 @@ public class EnableListViewButtonAction implements ViewAction {
 
   @Override
   public boolean perform(ActionContext actionContext) {
-    if (selector.isSelected()) {
+    if (selector.hasSelection()) {
       button.setEnabled(true);
     } else {
       button.setEnabled(false);
