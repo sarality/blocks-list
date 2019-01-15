@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Selector when only one item can be selected in a List.
+ * Selector when more than one item can be selected in a List.
  *
  * @author abhideep@ (Abhideep Singh)
  */
