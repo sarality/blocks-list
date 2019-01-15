@@ -1,6 +1,7 @@
 package com.sarality.list.action;
 
 import android.view.View;
+import android.widget.AdapterView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class SingleItemSelector implements ListItemSelector {
     this.highlightResId = android.R.drawable.list_selector_background;
   }
 
-  public void toggleSelection(View view, int pos, long viewId) {
+  public void toggleSelection(AdapterView<?> adapterView, View view, int pos, long viewId) {
     if (selectedView != null) {
       selectedView.setSelected(false);
     }
@@ -58,6 +59,7 @@ public class SingleItemSelector implements ListItemSelector {
     return hasSelection;
   }
 
+  @Override
   public boolean hasMultipleSelections() {
     return false;
   }
@@ -67,6 +69,7 @@ public class SingleItemSelector implements ListItemSelector {
     return selectedPosition;
   }
 
+  @Override
   public List<Integer> getSelectedPositions() {
     List<Integer> positionList = new ArrayList<>();
     if (hasSelection) {
