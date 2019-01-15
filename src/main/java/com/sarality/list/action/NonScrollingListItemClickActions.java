@@ -43,7 +43,7 @@ public class NonScrollingListItemClickActions implements ActionInitializer {
 
   @Override
   public void init() {
-    LinearLayout listView = (LinearLayout) activity.findViewById(listViewId);
+    LinearLayout listView = activity.findViewById(listViewId);
     int numChildren = listView.getChildCount();
     for (int i = 0; i < numChildren; i++) {
       View child = listView.getChildAt(i);
@@ -69,7 +69,7 @@ public class NonScrollingListItemClickActions implements ActionInitializer {
 
     private final ViewAction action;
 
-    public ViewActionWrapper(ViewAction action) {
+    ViewActionWrapper(ViewAction action) {
       this.action = action;
     }
 
@@ -95,7 +95,7 @@ public class NonScrollingListItemClickActions implements ActionInitializer {
     private final long viewId;
     private final ListItemSelector selector;
 
-    public Performer(ListViewAction action, int position, long viewId, ListItemSelector selector) {
+    Performer(ListViewAction action, int position, long viewId, ListItemSelector selector) {
       this.action = action;
       this.position = position;
       this.viewId = viewId;
@@ -105,7 +105,7 @@ public class NonScrollingListItemClickActions implements ActionInitializer {
     @Override
     public void onClick(View view) {
       if (selector != null) {
-        selector.toggleSelection(view, position, viewId);
+        selector.toggleSelection(null, view, position, viewId);
       }
       action.perform(null, view, position, viewId);
     }

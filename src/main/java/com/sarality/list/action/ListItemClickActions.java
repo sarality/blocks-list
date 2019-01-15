@@ -47,7 +47,7 @@ public class ListItemClickActions implements ActionInitializer {
 
   @Override
   public void init() {
-    ListView listView = (ListView) activity.findViewById(listViewId);
+    ListView listView = activity.findViewById(listViewId);
     listView.setOnItemClickListener(new Performer(listViewAction, selector));
   }
 
@@ -65,7 +65,7 @@ public class ListItemClickActions implements ActionInitializer {
 
     private final ViewAction action;
 
-    public ViewActionWrapper(ViewAction action) {
+    ViewActionWrapper(ViewAction action) {
       this.action = action;
     }
 
@@ -89,7 +89,7 @@ public class ListItemClickActions implements ActionInitializer {
     private final ListViewAction action;
     private final ListItemSelector selector;
 
-    public Performer(ListViewAction action, ListItemSelector selector) {
+    Performer(ListViewAction action, ListItemSelector selector) {
       this.action = action;
       this.selector = selector;
     }
@@ -97,9 +97,11 @@ public class ListItemClickActions implements ActionInitializer {
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int pos, long viewId) {
       if (selector != null) {
-        selector.toggleSelection(view, pos, viewId);
+        selector.toggleSelection(adapterView, view, pos, viewId);
       }
-      action.perform(adapterView, view, pos, viewId);
+      if (action != null) {
+        action.perform(adapterView, view, pos, viewId);
+      }
     }
   }
 }
