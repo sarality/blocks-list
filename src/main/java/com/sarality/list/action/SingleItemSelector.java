@@ -24,7 +24,9 @@ public class SingleItemSelector implements ListItemSelector {
   }
 
   public SingleItemSelector() {
-    this.highlightResId = android.R.drawable.list_selector_background;
+    this.highlightResId = 0;
+    // We used to use {@code android.R.drawable.list_selector_background} but we now rely on the layout itself
+    // to change the highlighting while this class only takes care of tracking the selected positions.
   }
 
   public void toggleSelection(AdapterView<?> adapterView, View view, int pos, long viewId) {
@@ -84,13 +86,13 @@ public class SingleItemSelector implements ListItemSelector {
   }
 
   private void highlightRow(View view) {
-    if (view != null) {
+    if (view != null && highlightResId > 0) {
       view.setBackgroundResource(highlightResId);
     }
   }
 
   private void unhighlightRow(View view) {
-    if (view != null) {
+    if (view != null && highlightResId > 0) {
       view.setBackgroundResource(android.R.color.transparent);
     }
   }
