@@ -49,5 +49,8 @@ public class ListInstance<T, H> {
   }
 
 
-
+  public void performItemClick(int pos) {
+    listView.performItemClick(listViewAdapter.getView(pos, null, null),
+        pos, listViewAdapter.getItemId(pos));
+  }
 }
