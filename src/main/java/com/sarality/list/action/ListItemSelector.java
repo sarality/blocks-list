@@ -1,77 +1,29 @@
 package com.sarality.list.action;
 
 import android.view.View;
+import android.widget.AdapterView;
+
+import java.util.List;
 
 /**
- * Keeps track of the selection for a List
+ * Interface for classes that keep track of selected item(s) for a List.
+ *
+ * NOTE: An implementation can take in an instance of the {@link com.sarality.list.ListViewItemRenderer} and
+ * {@link com.sarality.list.ListInstance} if it needs access to the Data or View Holder for the position.
  *
  * @author abhideep@ (Abhideep Singh)
  */
-public class ListItemSelector {
+public interface ListItemSelector {
 
-  private final int highlightResId;
+  void toggleSelection(AdapterView<?> adapterView, View view, int pos, long viewId);
 
-  private boolean isSelected = false;
-  private int selectedPosition = -1;
-  private View selectedView = null;
+  boolean hasSelection();
 
-  public ListItemSelector(int highlightResId) {
-    this.highlightResId = highlightResId;
-  }
+  int getSelectedPosition();
 
-  public ListItemSelector() {
-    this.highlightResId = android.R.drawable.list_selector_background;
-  }
+  View getSelectedView();
 
-  public boolean toggleSelection(View view, int pos, long viewId) {
-    if (selectedView != null) {
-      selectedView.setSelected(false);
-    }
-    if (pos == selectedPosition) {
-      if (isSelected) {
-        unhighlightRow(selectedView);
-        isSelected = false;
-        selectedView = null;
-        selectedPosition = -1;
-      } else {
-        isSelected = true;
-        selectedView = view;
-        selectedView.setSelected(true);
-        selectedPosition = pos;
-        highlightRow(selectedView);
-      }
-    } else {
-      unhighlightRow(selectedView);
-      isSelected = true;
-      selectedView = view;
-      selectedView.setSelected(true);
-      selectedPosition = pos;
-      highlightRow(selectedView);
-    }
-    return true;
-  }
+  boolean hasMultipleSelections();
 
-  public boolean isSelected() {
-    return isSelected;
-  }
-
-  public int getSelectedPosition() {
-    return selectedPosition;
-  }
-
-  public View getSelectedView() {
-    return selectedView;
-  }
-
-  public void highlightRow(View view) {
-    if (view != null) {
-      view.setBackgroundResource(highlightResId);
-    }
-  }
-
-  private void unhighlightRow(View view) {
-    if (view != null) {
-      view.setBackgroundResource(android.R.color.transparent);
-    }
-  }
+  List<Integer> getSelectedPositions();
 }
