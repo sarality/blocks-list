@@ -30,6 +30,10 @@ public class MoveListRowAction<T> implements ViewAction {
       step = 1;
     }
     int pos = selector.getSelectedPosition();
+    // If nothing is selected, no need to do anything
+    if (pos < 0) {
+      return true;
+    }
     int swapPos = pos + step;
     List<T> currentDataList = listInstance.getDataList();
     if (swapPos < 0 || swapPos >= currentDataList.size()) {
