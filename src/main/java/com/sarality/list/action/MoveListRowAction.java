@@ -13,33 +13,51 @@ import java.util.List;
  * @author abhideep@ (Abhideep Singh)
  */
 public class MoveListRowAction<T> implements ViewAction {
-  private final boolean moveDown;
-  private final ListItemSelector selector;
   private final ListInstance<T, ?> listInstance;
+  private final ListItemSelector selector;
+  private final int stepSize;
 
-  public MoveListRowAction(boolean moveDown, ListItemSelector selector, ListInstance<T, ?> listInstance) {
-    this.moveDown = moveDown;
-    this.selector = selector;
+  public MoveListRowAction(ListInstance<T, ?> listInstance, ListItemSelector selector, int stepSize) {
     this.listInstance = listInstance;
+    this.selector = selector;
+    this.stepSize = stepSize;
   }
 
   @Override
   public boolean perform(ActionContext actionContext) {
-    int step = -1;
-    if (moveDown) {
-      step = 1;
-    }
+    // TODO(abhideep): Add Support for Multi-Select
     int pos = selector.getSelectedPosition();
-    int swapPos = pos + step;
-    List<T> currentDataList = listInstance.getDataList();
-    if (swapPos < 0 || swapPos >= currentDataList.size()) {
+    // If nothing is selected, no need to do anything
+    if (pos < 0) {
       return true;
+    }
+    // What is the position that the selected item is moved to.
+    int swapPos = pos + stepSize;
+    List<T> currentDataList = listInstance.getDataList();
+    if (swapPos < 0) {
+      swapPos = 0;
+    }
+    if (swapPos >= currentDataList.size()) {
+      swapPos = currentDataList.size() - 1;
+    }
+    // Why do extra work if nothing has changed
+    if (pos == swapPos) {
+      return true;
+    }
+
+    int step = 1;
+    int startPos = pos;
+    int endPos = swapPos - 1;
+    if (stepSize < 0) {
+      step = -1;
+      startPos = swapPos + 1;
+      endPos = pos;
     }
     List<T> dataList = new ArrayList<>();
     int ctr = 0;
     for (T currentData : currentDataList) {
-      if (ctr == pos) {
-        dataList.add(currentDataList.get(swapPos));
+      if (ctr >= startPos && ctr <= endPos) {
+        dataList.add(currentDataList.get(ctr + step));
       } else if (ctr == swapPos) {
         dataList.add(currentDataList.get(pos));
       } else {
@@ -50,6 +68,7 @@ public class MoveListRowAction<T> implements ViewAction {
     listInstance.setDataList(dataList);
     listInstance.refresh();
     listInstance.performItemClick(swapPos);
+    listInstance.scrollToPosition(swapPos);
     return true;
   }
 }
