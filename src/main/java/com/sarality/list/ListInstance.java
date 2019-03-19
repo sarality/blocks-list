@@ -48,9 +48,11 @@ public class ListInstance<T, H> {
     return listViewAdapter.getFilteredList();
   }
 
-
   public void performItemClick(int pos) {
     listView.performItemClick(listViewAdapter.getView(pos, null, null),
         pos, listViewAdapter.getItemId(pos));
+  }
+  public void scrollToPosition(int pos) {
+    listView.smoothScrollToPosition(pos);
   }
 }
