@@ -26,10 +26,16 @@ public class SearchViewInitializer {
   }
 
   public void init(Menu menu) {
-    SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
-    SearchView searchView = (SearchView) menu.findItem(searchViewId).getActionView();
-    searchView.setSearchableInfo( searchManager.getSearchableInfo(activity.getComponentName()));
+    initSearchView((SearchView) menu.findItem(searchViewId).getActionView());
+  }
 
+  public void init() {
+    initSearchView((SearchView) activity.findViewById(searchViewId));
+  }
+
+  private void initSearchView(SearchView searchView) {
+    SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
+    searchView.setSearchableInfo(searchManager.getSearchableInfo(activity.getComponentName()));
     searchView.setOnQueryTextListener(new QueryTextListener());
   }
 
@@ -45,4 +51,5 @@ public class SearchViewInitializer {
       return true;
     }
   }
+
 }
