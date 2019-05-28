@@ -33,7 +33,9 @@ class ListViewAdapter<T, H> extends BaseAdapter implements Filterable {
       DataMatcher<T> dataMatcher, boolean sortByScore, Comparator<T> defaultComparator) {
     this.activity = activity;
     this.dataList = dataList;
-    this.displayList.addAll(dataList);
+    if (dataList != null) {
+      this.displayList.addAll(dataList);
+    }
     this.renderer = renderer;
     if (dataMatcher != null) {
       this.resultsFilter = new DataFilter(dataMatcher);
