@@ -2,6 +2,7 @@ package com.sarality.list.action;
 
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Checkable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class SingleItemSelector implements ListItemSelector {
     }
     if (pos == selectedPosition) {
       if (hasSelection) {
-        unhighlightRow(selectedView);
+        unhighlightRow(adapterView, selectedView);
         hasSelection = false;
         selectedView = null;
         selectedPosition = -1;
@@ -47,7 +48,7 @@ public class SingleItemSelector implements ListItemSelector {
         highlightRow(selectedView);
       }
     } else {
-      unhighlightRow(selectedView);
+      unhighlightRow(adapterView, selectedView);
       hasSelection = true;
       selectedView = view;
       selectedView.setSelected(true);
@@ -91,9 +92,13 @@ public class SingleItemSelector implements ListItemSelector {
     }
   }
 
-  private void unhighlightRow(View view) {
+  private void unhighlightRow(AdapterView<?> adapterView, View view) {
     if (view != null && highlightResId > 0) {
       view.setBackgroundResource(android.R.color.transparent);
+    }
+    if (adapterView == null && view instanceof Checkable) {
+      Checkable checkedView = (Checkable) view;
+      checkedView.setChecked(false);
     }
   }
 }
